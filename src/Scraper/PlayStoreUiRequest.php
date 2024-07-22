@@ -59,7 +59,7 @@ class PlayStoreUiRequest
     ): RequestInterface {
         $limit = min(self::LIMIT_REVIEW_ON_PAGE, max(1, $count));
         $locale = $locale ?? $requestApp->getLocale();
-        $country = $locale ?? $requestApp->getCountry();
+        $country = $country ?? $requestApp->getCountry();
 
         $queryParams = [
             'rpcids' => self::RPC_ID_REVIEWS,
