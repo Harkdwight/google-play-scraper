@@ -363,7 +363,7 @@ class GPlayApps
      *
      * @api
      */
-    public function getReviews($appId, int $limit = 100, ?Enum\SortEnum $sort = null): array
+    public function getReviews($appId, int $limit = 100, $locale = null, $country = null, ?Enum\SortEnum $sort = null): array
     {
         $appId = Util\Caster::castToAppId($appId, $this->defaultLocale, $this->defaultCountry);
         $sort = $sort ?? Enum\SortEnum::NEWEST();
@@ -382,7 +382,7 @@ class GPlayApps
                     ? Scraper\PlayStoreUiRequest::LIMIT_REVIEW_ON_PAGE
                     : min(Scraper\PlayStoreUiRequest::LIMIT_REVIEW_ON_PAGE, max($limit - $allCount, 1));
 
-                $psrRequest = Scraper\PlayStoreUiRequest::getReviewsRequest($appId, $count, $sort, $token);
+                $psrRequest = Scraper\PlayStoreUiRequest::getReviewsRequest($appId, $count, $sort, $token, $locale, $country);
                 $request = new Request($psrRequest, [
                     'cache_ttl' => $cacheTtl,
                 ], new Scraper\ReviewsScraper($appId));

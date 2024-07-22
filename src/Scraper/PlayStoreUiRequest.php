@@ -53,13 +53,18 @@ class PlayStoreUiRequest
         AppId $requestApp,
         int $count,
         SortEnum $sort,
-        ?string $token = null
+        ?string $token = null,
+        $locale = null,
+        $country = null
     ): RequestInterface {
         $limit = min(self::LIMIT_REVIEW_ON_PAGE, max(1, $count));
+        $locale = $locale ?? $requestApp->getLocale();
+        $country = $locale ?? $requestApp->getCountry();
+
         $queryParams = [
             'rpcids' => self::RPC_ID_REVIEWS,
-            GPlayApps::REQ_PARAM_LOCALE => $requestApp->getLocale(),
-            GPlayApps::REQ_PARAM_COUNTRY => $requestApp->getCountry(),
+            GPlayApps::REQ_PARAM_LOCALE => $locale,
+            GPlayApps::REQ_PARAM_COUNTRY => $country,
             'authuser' => null,
             'soc-app' => 121,
             'soc-platform' => 1,
